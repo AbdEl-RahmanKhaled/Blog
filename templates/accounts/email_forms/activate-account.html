@@ -1,0 +1,12 @@
+{% extends '_email-layout.html' %}
+
+{% block header %}Account Activation{% endblock %}
+{% block msg %}
+    Hi {{ account.first_name }} {{ account.last_name }} <br>
+    Please click this button below to activate your account
+{% endblock %}
+
+{% block btn_text %}Activate Account{% endblock %}
+{% block link %}
+    http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+{% endblock %}
