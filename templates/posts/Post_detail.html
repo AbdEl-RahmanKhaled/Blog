@@ -18,6 +18,17 @@
   <a href = "{% url 'like' post.id %}">Like</a>
 
 <a href = "{% url 'dislikes' post.id %}">dislike</a>
+{% if comments %}
+    {% for comment in comments %}
+        <h3> {{ comment.content }}</h3>
+    {% endfor %}
+{% endif %}
+<form method="post" action="{% url 'comment' %}" > {% csrf_token %}
+    <input name="comment" type="text"/>
+    <input name="p_id" hidden value="{{ post.id }}">
+    <button type="submit">Comment</button>
+</form>
+
 
 
 </body>

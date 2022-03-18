@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from Accounts.models import Account
-from Accounts.models import Account
-from Posts.models import Post,PostLikes,PostDislikes
+from Comments.models import Comment
+from Posts.models import Post, PostLikes, PostDislikes
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -22,41 +22,38 @@ def posts(request):
 
 def post_detail(request, p_id):
     post = Post.objects.get(id=p_id)
-    context = {'post': post}
+    comments = Comment.objects.filter(post=post)
+    context = {
+        'post': post,
+        'comments': comments
+               }
     return render(request, 'posts/Post_detail.html', context)
 
 
 def like(request, p_id):
-    request.user.pk
+    account = Account.objects.get(id=request.user.id)
     post = Post.objects.get(id=p_id)
-    post.likes += 1
-    post.save()
+    post_likes = PostLikes.objects.filter(account=account, post=post)
+    post_dislikes = PostDislikes.objects.filter(account=account, post=post)
 
+    if post_likes.exists():
+        post.likes -= 1
+        post_likes.delete()
+        post.save()
 
+    else:
 
-def like(request, p_id):
-        account = Account.objects.get(id=request.user.id)
-        post = Post.objects.get(id=p_id)
-        post_likes = PostLikes.objects.filter(account=account, post=post)
-        post_dislikes = PostDislikes.objects.filter(account=account, post=post)
+        if post_dislikes.exists():
+            post_dislikes.delete()
+            post.dislikes -= 1
 
-        if post_likes.exists():
-            post.likes -= 1
-            post_likes.delete()
-            post.save()
+        newLike = PostLikes(account=account, post=post)
+        post.likes += 1
+        newLike.save()
+        post.save()
 
-        else:
+    return redirect('postDetails', p_id=p_id)
 
-            if post_dislikes.exists():
-                post_dislikes.delete()
-                post.dislikes -= 1
-
-            newLike = PostLikes(account=account, post=post)
-            post.likes += 1
-            newLike.save()
-            post.save()
-
-        return redirect('postDetails', p_id=p_id)
 
 def dislikes(request, p_id):
     account = Account.objects.get(id=request.user.id)
@@ -72,7 +69,7 @@ def dislikes(request, p_id):
 
         if post_likes.exists():
             post_likes.delete()
-            post.likes -=1
+            post.likes -= 1
 
         newDislike = PostDislikes(account=account, post=post)
         post.dislikes += 1
