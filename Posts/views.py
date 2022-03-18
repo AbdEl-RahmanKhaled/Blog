@@ -17,13 +17,13 @@ def index(request):
 def posts(request):
     post = Post.objects.all().order_by('-date')
     context = {"posts": post}
-    return render(request, 'timeline.html', context)
+    return render(request, 'posts/timeline.html', context)
 
 
 def post_detail(request, p_id):
     post = Post.objects.get(id=p_id)
     context = {'post': post}
-    return render(request, 'Post_detail.html', context)
+    return render(request, 'posts/Post_detail.html', context)
 
 
 def like(request, p_id):
