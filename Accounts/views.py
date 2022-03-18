@@ -93,12 +93,12 @@ class ActivateAccountView(View):
             user.save()
             messages.add_message(request, messages.SUCCESS,
                                  'account activated successfully')
-            return redirect('login')
-        return render(request, 'accounts/activate_failed.html', status=401)
+        messages.error(request, 'Not Valid Request')
+        return redirect('login')
 
 
 class RequestResetPasswordView(View):
-    template = 'accounts/request-rest-password.html'
+    template = 'accounts/request-reset-password.html'
 
     @method_decorator(logout_required)
     def get(self, request):
@@ -143,7 +143,8 @@ class RestPasswordView(View):
             messages.error(request, 'your new password is not valid please use more than 6 characters')
             return render(request, self.template)
         else:
-            return render(request, 'accounts/activate_failed.html')
+            messages.error(request, 'Not Valid Request')
+            return redirect('login')
 
     @staticmethod
     def decode_user(uidb64, token):
