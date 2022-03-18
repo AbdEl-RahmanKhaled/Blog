@@ -1,4 +1,5 @@
 from django.db import models
+from Accounts.models import Account
 
 
 class Category(models.Model):
@@ -20,3 +21,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PostLikes(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+
+class PostDislikes(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
