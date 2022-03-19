@@ -10,7 +10,7 @@ def index(request):
     return render(request, '_layout.html')
 
 
-@login_required(redirect_field_name=None, login_url='/accounts/login')
+@login_required(redirect_field_name=None, login_url='/account/login')
 @verified_acc_only
 def posts(request):
     post = Post.objects.all().order_by('-date')
