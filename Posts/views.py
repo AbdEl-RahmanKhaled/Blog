@@ -30,34 +30,35 @@ def post_detail(request, p_id):
     return render(request, 'posts/Post_detail.html', context)
 
 
-def like(request, p_id):
+def like(request):
+    if request.method == 'POST':
+        account = Account.objects.get(id=request.user.id)
+        post = Post.objects.get(id=request.POST['p_id'])
+        post_likes = PostLikes.objects.filter(account=account, post=post)
+        post_dislikes = PostDislikes.objects.filter(account=account, post=post)
+
+        if post_likes.exists():
+            post.likes -= 1
+            post_likes.delete()
+            post.save()
+
+        else:
+
+            if post_dislikes.exists():
+                post_dislikes.delete()
+                post.dislikes -= 1
+
+            newLike = PostLikes(account=account, post=post)
+            post.likes += 1
+            newLike.save()
+            post.save()
+
+    return redirect('postDetails', p_id=request.POST['p_id'])
+
+
+def dislikes(request):
     account = Account.objects.get(id=request.user.id)
-    post = Post.objects.get(id=p_id)
-    post_likes = PostLikes.objects.filter(account=account, post=post)
-    post_dislikes = PostDislikes.objects.filter(account=account, post=post)
-
-    if post_likes.exists():
-        post.likes -= 1
-        post_likes.delete()
-        post.save()
-
-    else:
-
-        if post_dislikes.exists():
-            post_dislikes.delete()
-            post.dislikes -= 1
-
-        newLike = PostLikes(account=account, post=post)
-        post.likes += 1
-        newLike.save()
-        post.save()
-
-    return redirect('postDetails', p_id=p_id)
-
-
-def dislikes(request, p_id):
-    account = Account.objects.get(id=request.user.id)
-    post = Post.objects.get(id=p_id)
+    post = Post.objects.get(id=request.POST['p_id'])
     post_dislikes = PostDislikes.objects.filter(account=account, post=post)
     post_likes = PostLikes.objects.filter(account=account, post=post)
 
@@ -75,5 +76,4 @@ def dislikes(request, p_id):
         post.dislikes += 1
         newDislike.save()
         post.save()
-    return redirect('postDetails', p_id=p_id)
-    # return HttpResponseRedirect("/Post_detail/" + p_id)
+    return redirect('postDetails', p_id=request.POST['p_id'])

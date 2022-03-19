@@ -14,10 +14,19 @@
 <h1> Likes: {{ post.likes }}</h1>
 <h1> Dislikes: {{ post.dislikes }}</h1>
 
+<form method="post" action="{% url 'like' %}" >
+    {% csrf_token %}
+   <input name="p_id" hidden value="{{ post.id }}">
+    <button type="submit">Like</button>
+</form>
 
-  <a href = "{% url 'like' post.id %}">Like</a>
+<form method="post" action="{% url 'dislikes'%}">
+    {% csrf_token %}
+   <input name="p_id" hidden value="{{ post.id }}">
+    <button type="submit">Dislike</button>
+</form>
 
-<a href = "{% url 'dislikes' post.id %}">dislike</a>
+
 {% if comments %}
     {% for comment in comments %}
         <h3> {{ comment.content }}</h3>
