@@ -1,19 +1,17 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render
-from Accounts.models import Account
 from Comments.models import Comment
 from Posts.models import Post, PostLikes, PostDislikes
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from Helpers.Decorators.auth_decorators import verified_acc_only
 
-
-# Create your views here.
 
 def index(request):
     return render(request, '_layout.html')
 
 
+@login_required(redirect_field_name=None, login_url='/accounts/login')
+@verified_acc_only
 def posts(request):
     post = Post.objects.all().order_by('-date')
     context = {"posts": post}
@@ -26,16 +24,15 @@ def post_detail(request, p_id):
     context = {
         'post': post,
         'comments': comments
-               }
+    }
     return render(request, 'posts/Post_detail.html', context)
 
 
 def like(request):
     if request.method == 'POST':
-        account = Account.objects.get(id=request.user.id)
         post = Post.objects.get(id=request.POST['p_id'])
-        post_likes = PostLikes.objects.filter(account=account, post=post)
-        post_dislikes = PostDislikes.objects.filter(account=account, post=post)
+        post_likes = PostLikes.objects.filter(account_id=request.user.id, post=post)
+        post_dislikes = PostDislikes.objects.filter(account_id=request.user.id, post=post)
 
         if post_likes.exists():
             post.likes -= 1
@@ -48,19 +45,18 @@ def like(request):
                 post_dislikes.delete()
                 post.dislikes -= 1
 
-            newLike = PostLikes(account=account, post=post)
+            new_like = PostLikes(account_id=request.user.id, post=post)
             post.likes += 1
-            newLike.save()
+            new_like.save()
             post.save()
 
     return redirect('postDetails', p_id=request.POST['p_id'])
 
 
 def dislikes(request):
-    account = Account.objects.get(id=request.user.id)
     post = Post.objects.get(id=request.POST['p_id'])
-    post_dislikes = PostDislikes.objects.filter(account=account, post=post)
-    post_likes = PostLikes.objects.filter(account=account, post=post)
+    post_dislikes = PostDislikes.objects.filter(account_id=request.user.id, post=post)
+    post_likes = PostLikes.objects.filter(account_id=request.user.id, post=post)
 
     if post_dislikes.exists():
         post.dislikes -= 1
@@ -72,8 +68,8 @@ def dislikes(request):
             post_likes.delete()
             post.likes -= 1
 
-        newDislike = PostDislikes(account=account, post=post)
+        new_dislike = PostDislikes(account_id=request.user.id, post=post)
         post.dislikes += 1
-        newDislike.save()
+        new_dislike.save()
         post.save()
     return redirect('postDetails', p_id=request.POST['p_id'])
