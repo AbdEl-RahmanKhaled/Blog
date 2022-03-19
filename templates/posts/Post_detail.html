@@ -5,13 +5,17 @@
     <title>Title</title>
 </head>
 <body>
+<button><a href="{% url 'sub_category' post.category.id %}">Sub to this category</a></button>
+<button><a href="{% url 'unsub_category' post.category.id %}">Unsub to this category</a></button>
+
+
 
 <h1> Post Title: {{ post.title }}</h1>
 <h1> Date: {{ post.date }}</h1>
 <h1> img:<img src="../../media/{{ post.pic }}"  width=200px height = 200px/> </h1>
 <h1> Content: {{ post.content }}</h1>
 <h1> Category: {{ post.category }}</h1>
-<h1> Likes: {{ post.likes }}</h1>
+<h1> Likes: {{ post.likes }} </h1>
 <h1> Dislikes: {{ post.dislikes }}</h1>
 
 <form method="post" action="{% url 'like' %}" >

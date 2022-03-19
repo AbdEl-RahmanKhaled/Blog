@@ -2,8 +2,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 from Accounts.models import Account
 from Comments.models import Comment
-from Posts.models import Post, PostLikes, PostDislikes
+from Posts.models import Post, PostLikes, PostDislikes, Category
 from django.shortcuts import redirect
+
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -26,7 +27,7 @@ def post_detail(request, p_id):
     context = {
         'post': post,
         'comments': comments
-               }
+    }
     return render(request, 'posts/Post_detail.html', context)
 
 
@@ -41,13 +42,10 @@ def like(request):
             post.likes -= 1
             post_likes.delete()
             post.save()
-
         else:
-
             if post_dislikes.exists():
                 post_dislikes.delete()
                 post.dislikes -= 1
-
             newLike = PostLikes(account=account, post=post)
             post.likes += 1
             newLike.save()
@@ -76,4 +74,22 @@ def dislikes(request):
         post.dislikes += 1
         newDislike.save()
         post.save()
-    return redirect('postDetails', p_id=request.POST['p_id'])
+    return redirect(posts)
+
+def sub_category(request, cat_id):
+    account = Account.objects.get(id=request.user.id)
+    cat = Category.objects.get(id=cat_id)
+    # subbed_cat = account.objects.filter(subbed_users__category=cat)
+    # if not subbed_cat.exists():
+    cat.subbed_users.add(account)
+    return redirect(posts)
+
+
+
+def unsub_category(request, cat_id):
+    account = Account.objects.get(id=request.user.id)
+    cat = Category.objects.get(id=cat_id)
+    # subbed_cat = account.objects.filter(subbed_users__category=cat)
+    # if not subbed_cat.exists():
+    cat.subbed_users.remove(account)
+    return redirect(posts)
