@@ -1,0 +1,64 @@
+<!-- Login modal -->
+<div
+        class="modal fade"
+        id="loginModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center imglogin">
+                    <img src=""/>
+                    <!-- image source above -->
+                </div>
+
+                <form method="post" onSubmit="{handleLogin}">
+                    <div class="form-group form-login">
+                        <input
+                                type="email"
+                                class="form-control inputlogin"
+                                id="exampleInputEmail1"
+                                aria-describedby="emailHelp"
+                                placeholder="Email or username"
+                                name="username"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <input
+                                type="password"
+                                class="form-control inputlogin"
+                                id="exampleInputPassword1"
+                                placeholder="Password"
+                                name="password"
+                        />
+                    </div>
+                    <button type="submit" class="btn btn-login">Log in</button>
+                    <div class="forget">
+                        <a href="#">Forgot Password?</a>
+                        <a
+                                style="float: right"
+                                data-bs-toggle="modal"
+                                data-bs-target="#signupModal"
+                                data-bs-dismiss="modal"
+                                href="#"
+                        >
+                            Sign up
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{# <button#}
+{#      type="button"#}
+{#      class="btn btn-primary"#}
+{#      data-bs-toggle="modal"#}
+{#      data-bs-target="#loginModal"#}
+{#    >#}
+{#      Launch login modal#}
+{#    </button>#}
