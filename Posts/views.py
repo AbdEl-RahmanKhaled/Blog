@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from pyexpat.errors import messages
 
+from django.shortcuts import render
+from django.views import View
+from .models import Post
 from Accounts.models import Account
 from Comments.models import Comment
 from Posts.models import Post, PostLikes, PostDislikes, Category
@@ -91,3 +94,40 @@ def unsub_category(request, cat_id):
     # if not subbed_cat.exists():
     cat.subbed_users.remove(account)
     return redirect(posts)
+
+
+# admin modules
+
+class PostsAdminView(View):
+    template = 'posts/admin-posts.html'
+
+    def get(self, request):
+        context = {
+            'posts': Post.objects.all()
+        }
+        return render(request, self.template, context)
+
+
+# def PostsAdminView(request):
+#     # template = 'admin-posts.html'
+#     posts = Post.objects.all()
+#     context = {"object_list": posts}
+#     return render(request, 'posts/admin-posts.html', context)
+
+
+class PostEditAdmin(View):
+    template = 'posts/adminEditPost.html'
+
+    def get(self, request, p_id):
+        context = {
+            'post': Post.objects.get(id=p_id)
+        }
+        return render(request, self.template, context)
+
+    def post(self, request):
+        # request.POST.pop('csrfmiddlewaretoken')
+        print(request.POST)
+        post = Post(**request.POST)
+        post.save()
+        return redirect('index')
+
