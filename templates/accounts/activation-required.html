@@ -1,1 +1,36 @@
-<h2>account not activated</h2>
+{% extends '_layout.html' %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+    <section id="login" class="bg-light py-5" style="min-height: 100%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    <div class="card">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="text-center imglogin">
+                                    <img src=""/>
+                                    <!-- image source above -->
+                                </div>
+
+                                <form method="post" action={% url 'activation-required' %}>
+                                    {% csrf_token %}
+                                    {% include 'partials/_alerts.html' %}
+                                    <div class="form-group form-login">
+                                        <p>To login activate your account first, we sent you an email with instructions
+                                            to activate your
+                                            account,
+                                            if you did not receive our email you can resend it</p>
+                                    </div>
+                                    <button type="submit" class="btn btn-login">Resend Email</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

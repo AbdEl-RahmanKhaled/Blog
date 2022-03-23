@@ -1,5 +1,3 @@
-from pyexpat.errors import messages
-
 from django.shortcuts import render
 from django.views import View
 from .models import Post
@@ -9,6 +7,8 @@ from Posts.models import Post, PostLikes, PostDislikes, Category
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from Helpers.Decorators.auth_decorators import verified_acc_only
+from django.views import View
+from django.contrib import messages
 
 
 def index(request):
@@ -25,7 +25,7 @@ def posts(request):
 
 def post_detail(request, p_id):
     post = Post.objects.get(id=p_id)
-    comments = Comment.objects.filter(post=post)
+    comments = Comment.objects.filter(post=post).order_by('-created_on')
     context = {
         'post': post,
         'comments': comments
@@ -79,6 +79,7 @@ def dislikes(request):
         post.save()
     return redirect('postDetails', p_id=request.POST['p_id'])
 
+
 def sub_category(request, cat_id):
     account = Account.objects.get(id=request.user.id)
     cat = Category.objects.get(id=cat_id)
@@ -86,6 +87,7 @@ def sub_category(request, cat_id):
     # if not subbed_cat.exists():
     cat.subbed_users.add(account)
     return redirect(posts)
+
 
 def unsub_category(request, cat_id):
     account = Account.objects.get(id=request.user.id)
