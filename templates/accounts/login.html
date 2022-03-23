@@ -3,36 +3,36 @@
 {% block title %} Login {% endblock %}
 
 {% block content %}
-    <section id="login" class="bg-light py-5">
+    <section id="login" class="bg-light py-5" style="min-height: 100%;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mx-auto">
                     <div class="card">
-                        <div class="card-header bg-primary text-white">
-                            <h4>
-                                <i class="fas fa-sign-in-alt"></i> Login</h4>
-                        </div>
-                        <div class="card-body">
-                            {# Alerts #}
-                            {% include 'partials/_alerts.html' %}
-                            <form action="{% url 'login' %}" method="POST">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="username">Username</label>
-                                    <input type="text" name="username" class="form-control" required>
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="text-center imglogin">
+                                    <img src=""/>
+                                    <!-- image source above -->
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="password2">Password</label>
-                                    <input type="password" name="password" class="form-control" required>
-                                </div>
-
-                                <input type="submit" value="Login" class="btn btn-secondary btn-block">
-                                <div class="mt-3">
-                                    <a class="align-content-center" href="{% url 'request-rest-password' %}"> Forget
-                                        password ?</a>
-                                </div>
-                            </form>
+                                <form method="post" action="{% url 'login' %}">
+                                    {% csrf_token %}
+                                    {% include 'partials/_alerts.html' %}
+                                    <div class="form-group form-login">
+                                        <input type="text" class="form-control inputlogin"
+                                               placeholder="Email or username" name="username" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control inputlogin" placeholder="Password"
+                                               name="password" required/>
+                                    </div>
+                                    <button type="submit" class="btn btn-login">Log in</button>
+                                    <div class="forget">
+                                        <a href="{% url 'request-rest-password' %}">Forgot Password?</a>
+                                        <a style="float: right" href="{% url 'register' %}"> Sign up </a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

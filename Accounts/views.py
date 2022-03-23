@@ -74,10 +74,10 @@ class LoginView(View):
 
 @login_required(redirect_field_name=None, login_url='/accounts/login')
 def logout(request):
-    if request.method == 'POST':
-        auth.logout(request)
-        messages.success(request, 'You are now logged out')
-        return redirect('login')
+    # if request.method == 'POST':
+    auth.logout(request)
+    messages.success(request, 'You are now logged out')
+    return redirect('login')
 
 
 class ActivateAccountView(View):
