@@ -31,3 +31,5 @@ class PostLikes(models.Model):
 class PostDislikes(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+

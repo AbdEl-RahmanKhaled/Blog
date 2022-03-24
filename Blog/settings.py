@@ -77,7 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'blog_db',
-        'HOST': os.getenv('DB_HOST'),
+        'HOST': 'ec2-44-203-155-91.compute-1.amazonaws.com',
         'PORT': '5433',
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASS')

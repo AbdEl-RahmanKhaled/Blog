@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<h1>POSTS</h1>
 
-</body>
-</html>
+<ul>
+{% for post in posts  %}
+    <li>{{ post.title }}</li>
+  <li>  {{ post.date }}</li>
+  <li>  {{ post.pic }}</li>
+   <li> {{ post.content }}</li>
+{% endfor %}
+</ul>
