@@ -27,7 +27,7 @@
                 {% include 'partials/_sidebar.html' %}
             </div>
         {% endif %}
-        <div class="col offset-2 p-0" style="margin-left: 295px">
+        <div class="col p-0" {% if 'account' not in request.path %} style="margin-left: 295px" {% endif %}>
             <!-- Base content -->
             {% block content %}
 
