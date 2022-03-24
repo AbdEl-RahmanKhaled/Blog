@@ -19,18 +19,20 @@
 
 <!-- Navbar -->
 {% include 'partials/_navbar.html' %}
-<div style="width: 100%; min-height: 93.1%" class="d-flex flex-row">
+<div style="min-height: 93.1%;" class="container-fluid p-0">
+    <div class="row m-0">
 
-    {% if 'account' not in request.path %}
-        <div class="p-DockPanel">
-            {% include 'partials/_sidebar.html' %}
+        {% if 'account' not in request.path %}
+            <div class="col-lg-2 position-fixed p-0" style="height: 100%; min-width: 280px" id="sticky-sidebar">
+                {% include 'partials/_sidebar.html' %}
+            </div>
+        {% endif %}
+        <div class="col offset-2 p-0" style="margin-left: 295px">
+            <!-- Base content -->
+            {% block content %}
+
+            {% endblock %}
         </div>
-    {% endif %}
-    <div class="p-2 flex-grow-1">
-        <!-- Base content -->
-        {% block content %}
-
-        {% endblock %}
     </div>
 </div>
 
@@ -42,5 +44,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="{% static 'js/alerts.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

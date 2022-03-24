@@ -1,26 +1,16 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+
+    {% for p in posts %}
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-
-    <title>Title</title>
-</head>
-<body>
-
-   {% for p in posts %}
-
-
-       {{ p.title }}<br>
-     <a href = "{% url 'postDetails' p.id %}"> <img src="../../media/{{ p.pic }}"  width=200px height = 200px/> </a><br>
-       {{ p.date }}<br>
-       <hr>
+        {{ p.title }}<br>
+        <a href="{% url 'postDetails' p.id %}"> <img src="../../media/{{ p.pic }}" width=200px height=200px/> </a><br>
+        {{ p.date }}<br>
+        <hr>
 
 
 
-   {% endfor %}
-
-</body>
-</html>
+    {% endfor %}
+{% endblock %}
