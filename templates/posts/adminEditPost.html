@@ -1,6 +1,20 @@
-<h1>Edit POst</h1>
+{% extends '_layout.html' %}
 
-<form>
-    {% csrf_token %}
-<button type="submit">save</button>
-</form>
+{% block head_title %}
+
+Edit Post
+
+{% endblock head_title %}
+
+{% block content %}
+
+        <h1>Edit Post - {{ post.title}}</h1>
+        <div class="form-group">
+        <form method= "POST"> {% csrf_token %}
+
+        <button type="submit" class="btn btn-success">Update</button>
+        </form>
+        </div>
+    
+
+{% endblock content %}
