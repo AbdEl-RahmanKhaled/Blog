@@ -27,4 +27,14 @@ def logout_required(view_func):
             return view_func(request, *args, **kwargs)
         else:
             return redirect('index')
+
+    return wrap
+
+
+def superuser_required(view_func):
+    def wrap(request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('index')
     return wrap
