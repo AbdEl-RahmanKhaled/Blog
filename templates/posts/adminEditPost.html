@@ -2,19 +2,20 @@
 
 {% block head_title %}
 
-Edit Post
+    Edit Post
 
 {% endblock head_title %}
 
 {% block content %}
 
-        <h1>Edit Post - {{ post.title}}</h1>
-        <div class="form-group">
-        <form method= "POST"> {% csrf_token %}
-
-        <button type="submit" class="btn btn-success">Update</button>
+    <h1>Edit Post - {{ post.title }}</h1>
+    <div class="form-group">
+        <form method="post" action="{% url 'adminSubmitEditPost' %}">
+            {% csrf_token %}
+            {{ post.as_p }}
+            <button type="submit" class="btn btn-success">Update</button>
         </form>
-        </div>
-    
+    </div>
+
 
 {% endblock content %}
