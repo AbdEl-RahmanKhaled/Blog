@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
 from .models import Post
 from Accounts.models import Account
@@ -127,9 +128,23 @@ class PostEditAdmin(View):
         return render(request, self.template, context)
 
     def post(self, request):
-        # request.POST.pop('csrfmiddlewaretoken')
         print(request.POST)
         post = Post(**request.POST)
         post.save()
-        return redirect('index')
+        return redirect('admin-posts')
 
+
+# class PostDeleteAdmin(View):
+#     def post(self, request):
+#         try:
+#             post = Post.objects.get(request.POST['p_id'])
+#             post.delete()
+#         except Exception:
+#             messages.error(request, 'Not valid post id')
+#         return redirect('admin-posts')
+
+
+def PostDeleteAdmin(request, p_id):
+    post = Post.objects.get(id=p_id)
+    post.delete()
+    return redirect('admin-posts')
