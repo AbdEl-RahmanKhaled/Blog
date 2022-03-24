@@ -1,10 +1,26 @@
-<h1>POSTS</h1>
+{% extends '_layout.html' %}
 
-<ul>
-{% for post in posts  %}
-    <li>{{ post.title }}</li>
-  <li>  {{ post.date }}</li>
-  <li>  {{ post.pic }}</li>
-   <li> {{ post.content }}</li>
-{% endfor %}
-</ul>
+{% block content %}
+    <div class="container-fluid">
+        <table class="table table-striped mt-10">
+            <thead class="table-dark">
+            <tr>
+                <td>Title</td>
+                <td>Date</td>
+                <td>Content</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for post in posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>  {{ post.date }}</td>
+                    {#                <td>  {{ post.pic }}</td>#}
+                    <td> {{ post.content }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
