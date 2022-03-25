@@ -131,20 +131,38 @@ class PostsAdminView(View):
 #     return render(request, 'posts/admin-posts.html', context)
 
 
-class PostEditAdmin(View):
-    template = 'posts/adminEditPost.html'
-    post = None
+# class PostEditAdmin(View):
+#     template = 'posts/adminEditPost.html'
+#     post = None
+#
+#     def get(self, request, p_id):
+#         self.post = Post.objects.get(p_id)
+#         post = PostForm(instance=self.post)
+#         context = {'post': post}
+#         return render(request, self.template, context)
+#
+#     def post(self, request):
+#         # post = Post(**request.POST)
+#         # post.save()
+#         return redirect('admin-posts')
 
-    def get(self, request, p_id):
-        self.post = Post.objects.get(p_id)
-        post = PostForm(instance=self.post)
-        context = {'post': post}
-        return render(request, self.template, context)
 
-    def post(self, request):
-        # post = Post(**request.POST)
-        # post.save()
-        return redirect('admin-posts')
+class PostEditAdmin(UpdateView):
+    model = Post
+    fields = ('title', 'category', 'content', 'pic')
+    template_name = 'posts/adminEditPost.html'
+
+    def get_success_url(self):
+        return reverse('admin-posts')
+
+
+class AddPostAdmin(CreateView):
+    model = Post
+    fields = ('title', 'category', 'content')
+    template_name = 'posts/adminAddPost.html'
+
+    def get_success_url(self):
+        return reverse('admin-posts')
 
 
 # class PostDeleteAdmin(View):
@@ -163,11 +181,20 @@ def PostDeleteAdmin(request, p_id):
     return redirect('admin-posts')
 
 
-def AddPostAdmin(request):
-    post = PostForm()
-    # template = 'posts/admin-Posts.html'
-    context = {'post': post}
-    return render(request, 'posts/adminAddPost.html', context)
+# def PostDeleteAdmin(View):
+#     def post(self, request):
+#         post = Post.objects.get(p_id=request.POST['p_id'])
+#         post.delete()
+#         return redirect('admin-posts')
+
+# def AddPostAdmin(request):
+#     post = PostForm()
+#     # template = 'posts/admin-Posts.html'
+#     context = {'post': post}
+#     return render(request, 'posts/adminAddPost.html', context)
+
+
+
 
 
 ##############Categores##############

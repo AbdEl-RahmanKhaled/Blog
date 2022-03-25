@@ -5,10 +5,10 @@ from django import forms
 from Accounts.models import Account
 
 
-class PostForm(forms.ModelForm):
+class PostForm(ModelForm):
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ('title', 'content')
 
 
 class UserForm(ModelForm):
