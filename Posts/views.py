@@ -17,7 +17,7 @@ def index(request):
 
 
 @login_required(redirect_field_name=None, login_url='/account/login')
-@verified_acc_only
+# @verified_acc_only
 def posts(request):
     post = Post.objects.all().order_by('-date')
     context = {"posts": post}
