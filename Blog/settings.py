@@ -30,8 +30,11 @@ INSTALLED_APPS = [
     'Accounts',
     'Posts',
     'Comments',
-    'ManageBlog'
+    'ManageBlog',
+    'crispy_forms'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'blog_db',
-        'HOST': 'ec2-44-203-155-91.compute-1.amazonaws.com',
+        'HOST': "ec2-44-203-155-91.compute-1.amazonaws.com",
         'PORT': '5433',
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASS')

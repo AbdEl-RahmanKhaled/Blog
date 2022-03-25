@@ -1,0 +1,59 @@
+{% extends '_layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="content">
+        <div class="container">
+            <div class="row mt-5 ">
+                <h2 class="h2 text-center">Create User</h2>
+            </div>
+            <div class="row mt-5">
+                <div class="col mx-auto">
+                    <div class="card p-2">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ form.first_name|as_crispy_field }}
+                                </div>
+                                <div class="col-6">
+                                    {{ form.last_name|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                {{ form.username|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                {{ form.email|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                {{ form.password|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                {{ form.phone_number|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                {{ form.gender|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                {{ form.is_superuser|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                {{ form.is_active|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4  mx-auto">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-login">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

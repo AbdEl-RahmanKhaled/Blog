@@ -61,14 +61,27 @@ class LoginView(View):
         password = request.POST.get('password')
         if '@' in username:
             kwargs = {'email': username, 'password': password}
+            cre = {'email': username}
         else:
             kwargs = {'username': username, 'password': password}
+            cre = {'username': username}
         acc = auth.authenticate(**kwargs)
         if acc is not None:
             auth.login(request, acc)
             return redirect('/')
+        blocked = False
+        try:
+            acc = Account.objects.get(**cre)
+            if acc is not None:
+                if not acc.is_active:
+                    messages.error(request, 'You are blocked please contact the admin to unlock your account')
+                    blocked = True
+        except:
+            pass
 
-        messages.error(request, 'username or password not correct')
+        if not blocked:
+            messages.error(request, 'username or password not correct')
+
         return render(request, self.template_name, context)
 
 
