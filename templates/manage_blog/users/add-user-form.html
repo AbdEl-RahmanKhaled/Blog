@@ -5,7 +5,7 @@
     <div class="content">
         <div class="container">
             <div class="row mt-5 ">
-                <h2 class="h2 text-center">Edit User</h2>
+                <h2 class="h2 text-center">Create User</h2>
             </div>
             <div class="row mt-5">
                 <div class="col mx-auto">
@@ -37,6 +37,9 @@
                             </div>
                             <div class="row">
                                 {{ form.is_superuser|as_crispy_field }}
+                            </div>
+                            <div class="row">
+                                {{ form.is_active|as_crispy_field }}
                             </div>
                             <div class="row">
                                 <div class="col-md-4  mx-auto">
