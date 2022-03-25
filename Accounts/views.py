@@ -85,9 +85,8 @@ class LoginView(View):
         return render(request, self.template_name, context)
 
 
-@login_required(redirect_field_name=None, login_url='/accounts/login')
+@login_required(redirect_field_name=None, login_url='/account/login')
 def logout(request):
-    # if request.method == 'POST':
     auth.logout(request)
     messages.success(request, 'You are now logged out')
     return redirect('login')
@@ -171,11 +170,11 @@ class RestPasswordView(View):
 
 
 class ActivationRequiredView(View):
-    @method_decorator([login_required, not_verified_acc_only])
+    @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), not_verified_acc_only])
     def get(self, request):
         return render(request, 'accounts/activation-required.html')
 
-    @method_decorator([login_required, not_verified_acc_only])
+    @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), not_verified_acc_only])
     def post(self, request):
         vah = ViewsAccountHandler(request=request, account_obj=request.user)
         vah.send_email_verification()

@@ -39,11 +39,19 @@
                                         {% if not usr.is_superuser %}
                                             {% if usr.is_active %}
                                                 <td>
-                                                    <button class="btn btn-danger">Block</button>
+                                                    <form method="post" action="{% url 'admin_block_unblock_user' %}">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="u_id" value="{{ usr.id }}">
+                                                        <button type="submit" class="btn btn-danger">Block</button>
+                                                    </form>
                                                 </td>
                                             {% else %}
                                                 <td>
-                                                    <button class="btn btn-success">Unblock</button>
+                                                    <form method="post" action="{% url 'admin_block_unblock_user' %}">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="u_id" value="{{ usr.id }}">
+                                                        <button type="submit" class="btn btn-success">Unblock</button>
+                                                    </form>
                                                 </td>
                                             {% endif %}
                                         {% else %}
@@ -62,6 +70,46 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% if users.has_other_pages %}
+                        <ul class="pagination">
+                            {% if users.has_previous %}
+                                <li class="page-item">
+                                    <a href="?page={{ users.previous_page_number }}" class="page-link">&laquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&laquo;</a>
+                                </li>
+                            {% endif %}
+
+                            {% for i in users.paginator.page_range %}
+                                {% if users.number == i %}
+                                    <li class="page-item active">
+                                        <a class="page-link">{{ i }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if users.has_next %}
+                                <li class="page-item">
+                                    <a href="?page={{ users.next_page_number }}" class="page-link">&raquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&raquo;</a>
+                                </li>
+
+                            {% endif %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </div>

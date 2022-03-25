@@ -1,59 +1,104 @@
 <!-- sidebar -->
-<div
-        class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-        style="width: 280px; height: 100%"
->
-    <a
-            href="/"
-            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-    >
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+     style="width: 280px; height: 100%">
+
+    <a href="/"
+       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32">
             <use xlink:href="#bootstrap"/>
         </svg>
         <span class="fs-4">Sidebar</span>
     </a>
     <hr/>
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#home"/>
-                </svg>
-                Home
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#speedometer2"/>
-                </svg>
-                Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#table"/>
-                </svg>
-                Orders
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#grid"/>
-                </svg>
-                Products
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#people-circle"/>
-                </svg>
-                Customers
-            </a>
-        </li>
-    </ul>
-    <hr/>
+    {% if 'manage_blog' in request.path %}
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="{% url 'admin_users_list' %}"
+                   class="nav-link {% if 'user' in request.path %} active {% endif %}" aria-current="page">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#home"/>
+                    </svg>
+                    Users
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin-posts' %}"
+                   class="nav-link text-white {% if 'post' in request.path %} active {% endif %}">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#speedometer2"/>
+                    </svg>
+                    Posts
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#table"/>
+                    </svg>
+                    Categories
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white {% if 'word' in request.path %} active {% endif %}">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#grid"/>
+                    </svg>
+                    Forbidden Words
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#people-circle"/>
+                    </svg>
+                    Customers
+                </a>
+            </li>
+        </ul>
+        <hr/>
+    {% else %}
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" aria-current="page">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#home"/>
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#speedometer2"/>
+                    </svg>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#table"/>
+                    </svg>
+                    Orders
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#grid"/>
+                    </svg>
+                    Products
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#people-circle"/>
+                    </svg>
+                    Customers
+                </a>
+            </li>
+        </ul>
+        <hr/>
+    {% endif %}
 </div>

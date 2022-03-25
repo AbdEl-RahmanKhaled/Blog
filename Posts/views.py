@@ -1,5 +1,5 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
-
 from Accounts.models import Account
 from Comments.models import Comment
 from Posts.models import Post, PostLikes, PostDislikes, Category
@@ -16,7 +16,10 @@ def index(request):
 # @verified_acc_only
 def posts(request):
     post = Post.objects.all().order_by('-date')
-    context = {"posts": post}
+    paginator = Paginator(post, 2)
+    page = request.GET.get('page')
+    page_posts = paginator.get_page(page)
+    context = {"posts": page_posts}
     return render(request, 'posts/timeline.html', context)
 
 

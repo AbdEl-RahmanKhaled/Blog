@@ -1,4 +1,4 @@
-    {% load static %}
+{% load static %}
 
 <!-- Navbar -->
 
@@ -19,7 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav nav-pills">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Features</a>
@@ -32,7 +32,11 @@
         <div class="d-flex" style="margin: 5px;">
             {% if user.is_authenticated %}
                 <a class="btn btn-outline-danger me-2" href="{% url 'logout' %}">Logout</a>
-                <a class="btn btn-outline-info me-2" type="submit">Manage</a>
+                {% if user.is_superuser %}
+                    <a class="btn btn-outline-info me-2{% if 'manage_blog' in request.path %}
+                     active
+                     {% endif %}" href="{% url 'admin_users_list' %}">Manage</a>
+                {% endif %}
             {% else %}
 
                 <a class="btn btn-outline-success me-2
