@@ -24,7 +24,7 @@
                         <a href="index.html">Home</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="{% url 'posts' %}">Posts</a>
+                        <a href="{% url 'index' %}">Posts</a>
                     </li>
                     <li class="breadcrumb-item active">{{ post.title }}</li>
                 </ol>
@@ -35,7 +35,7 @@
     <!-- Listing -->
     <section id="listing" class="py-4">
         <div class="container">
-            <a href="{% url 'posts' %}" class="btn btn-light mb-4">Back To Timeline</a>
+            <a href="{% url 'index' %}" class="btn btn-light mb-4">Back To Timeline</a>
             <div class="row">
                 <div class="col-md-9">
                     <!-- Home Main Image -->
