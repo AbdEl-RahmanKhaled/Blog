@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='category',
             name='subbed_users',
-            field=models.ManyToManyField(related_name='users', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(related_name='accounts', to=settings.AUTH_USER_MODEL),
         ),
     ]

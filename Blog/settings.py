@@ -30,8 +30,11 @@ INSTALLED_APPS = [
     'Accounts',
     'Posts',
     'Comments',
-    'ManageBlog'
+    'ManageBlog',
+    'crispy_forms'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

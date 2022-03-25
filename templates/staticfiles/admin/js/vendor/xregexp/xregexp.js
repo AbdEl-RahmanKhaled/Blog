@@ -2824,7 +2824,7 @@ var registeredFlags = {
  * @param {String} xSource XRegExp pattern used to generate `regex`, or `null` if N/A.
  * @param {String} xFlags XRegExp flags used to generate `regex`, or `null` if N/A.
  * @param {Boolean} [isInternalOnly=false] Whether the regex will be used only for internal
- *   operations, and never exposed to users. For internal-only regexes, we can improve perf by
+ *   operations, and never exposed to accounts. For internal-only regexes, we can improve perf by
  *   skipping some operations like attaching `XRegExp.prototype` properties.
  * @returns {RegExp} Augmented regex.
  */
@@ -2882,7 +2882,7 @@ function clipDuplicates(str) {
  *   - `removeG` {Boolean} Remove flag g while copying the regex.
  *   - `removeY` {Boolean} Remove flag y while copying the regex.
  *   - `isInternalOnly` {Boolean} Whether the copied regex will be used only for internal
- *     operations, and never exposed to users. For internal-only regexes, we can improve perf by
+ *     operations, and never exposed to accounts. For internal-only regexes, we can improve perf by
  *     skipping some operations like attaching `XRegExp.prototype` properties.
  *   - `source` {String} Overrides `<regex>.source`, for special cases.
  * @returns {RegExp} Copy of the provided regex, possibly with modified flags.

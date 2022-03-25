@@ -4,7 +4,7 @@ from Accounts.models import Account
 
 class Category(models.Model):
     category = models.CharField(max_length=30, blank=False, null=False, verbose_name='Category')
-    subbed_users = models.ManyToManyField(Account, related_name='users')
+    subbed_users = models.ManyToManyField(Account, related_name='accounts')
     def __str__(self):
         return self.category
 
