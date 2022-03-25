@@ -31,7 +31,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
+                <a href="{% url 'admin_categories-list' %}" class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#table"/>
                     </svg>

@@ -1,0 +1,91 @@
+{% extends '_layout.html' %}
+
+{% block content %}
+    <div class="content">
+        <div class="container">
+            <div class="row mt-5">
+                <h2 class="h2 text-center">Manage Categories</h2>
+            </div>
+            <div class="row align-items-end mt-5">
+                <div class="col-md-3">
+                    <a class="btn btn-primary" href="{% url 'admin_add_category' %}">Add Category</a>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col mx-auto">
+                    <div class="card p-1">
+                        <table class="table table-striped align-middle">
+                            <thead class="table-dark">
+                            <tr>
+                                <td class="col col-md-9">Category</td>
+                                <td colspan="2">Actions</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if categories %}
+                                {% for category in categories %}
+                                    <tr>
+                                        <td class="col col-md-9">{{ category.category }}</td>
+                                        <td>
+                                            <form method="post" action="{% url 'admin_delete_category'  %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="cat_id" value="{{ category.id }}">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-warning" href="{% url 'admin_edit_category' category.id %}">
+                                                Edit
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% if users.has_other_pages %}
+                        <ul class="pagination">
+                            {% if users.has_previous %}
+                                <li class="page-item">
+                                    <a href="?page={{ users.previous_page_number }}" class="page-link">&laquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&laquo;</a>
+                                </li>
+                            {% endif %}
+
+                            {% for i in users.paginator.page_range %}
+                                {% if users.number == i %}
+                                    <li class="page-item active">
+                                        <a class="page-link">{{ i }}</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a href="?page={{ i }}" class="page-link">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if users.has_next %}
+                                <li class="page-item">
+                                    <a href="?page={{ users.next_page_number }}" class="page-link">&raquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link">&raquo;</a>
+                                </li>
+
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

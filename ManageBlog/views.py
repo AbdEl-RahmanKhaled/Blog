@@ -10,6 +10,7 @@ from ManageBlog.forms import UserForm, PostForm
 from Posts.models import Post
 from django.core.paginator import Paginator
 from Comments.models import BlockedWord
+from Posts.models import Category
 
 
 # users
@@ -167,3 +168,53 @@ def AddPostAdmin(request):
     # template = 'posts/admin-Posts.html'
     context = {'post': post}
     return render(request, 'posts/adminAddPost.html', context)
+
+
+##############Categores##############
+
+
+class ListCategories(View):
+    @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])
+    def get(self, request):
+        category = Category.objects.all()
+        paginator = Paginator(category, 7)
+        page = request.GET.get('page')
+        page_category = paginator.get_page(page)
+        context = {
+            'categories': page_category
+        }
+        return render(request, 'manage_blog/category/category-list.html', context)
+
+
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='get')
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='post')
+class CreateCategories(CreateView):
+    model = Category
+    fields = ('category',)
+    template_name = 'manage_blog/category/categories-form.html'
+
+    def get_success_url(self):
+        return reverse('admin_categories-list')
+
+
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='get')
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='post')
+class EditCategories(UpdateView):
+    model = Category
+    fields = ('category',)
+    template_name = 'manage_blog/category/categories-form.html'
+
+    def get_success_url(self):
+        return reverse('admin_categories-list')
+
+
+class DeleteCategories(View):
+    @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])
+    def post(self, request):
+        category = Category.objects.get(pk=request.POST['cat_id'])
+        category.delete()
+        return redirect('admin_categories-list')
