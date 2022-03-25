@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from django.urls import reverse
+from django.views.generic import UpdateView, CreateView
+
 from Accounts.models import Account
 from Helpers.Decorators.auth_decorators import *
 from django.views import View
@@ -8,6 +11,10 @@ from django.utils.decorators import method_decorator
 
 # Create your views here.
 # admin views
+from ManageBlog.forms import UserForm, PostForm
+from Posts.models import Post
+
+
 class AllUsersView(View):
     # @method_decorator([login_required, superuser_required])
     def get(self, request):

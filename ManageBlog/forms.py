@@ -1,16 +1,14 @@
-<<<<<<< HEAD
 from django import forms
 from Posts.models import Post
+from django.forms import ModelForm
+from django import forms
+from Accounts.models import Account
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = '__all__'
-=======
-from django.forms import ModelForm
-from django import forms
-from Accounts.models import Account
 
 
 class UserForm(ModelForm):
@@ -23,4 +21,3 @@ class UserForm(ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
->>>>>>> origin/master
