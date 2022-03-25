@@ -9,8 +9,10 @@ from django.utils.decorators import method_decorator
 from ManageBlog.forms import UserForm, PostForm
 from Posts.models import Post
 from django.core.paginator import Paginator
+from Comments.models import BlockedWord
 
 
+# users
 class AllUsersView(View):
     @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])
     def get(self, request):
@@ -60,6 +62,55 @@ class BlockUnblockView(View):
         user.is_active = not user.is_active
         user.save()
         return redirect('admin_users_list')
+
+
+# >>>>>>>>>>>>>>>>> Blocked Words <<<<<<<<<<<<<<<<<<<<<<<<
+
+class AllBlockedWordsView(View):
+    @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])
+    def get(self, request):
+        f_words = BlockedWord.objects.all().order_by('word')
+        paginator = Paginator(f_words, 7)
+        page = request.GET.get('page')
+        page_words = paginator.get_page(page)
+        context = {
+            'words': page_words
+        }
+        return render(request, 'manage_blog/blocked_words/blocked-words-list.html', context)
+
+
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='get')
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='post')
+class EditBlockedWordsView(UpdateView):
+    model = BlockedWord
+    fields = ('word',)
+    template_name = 'manage_blog/blocked_words/blocked-words-form.html'
+
+    def get_success_url(self):
+        return reverse('admin_blocked_words')
+
+
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='get')
+@method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required],
+                  name='post')
+class CreateBlockedWordsView(CreateView):
+    model = BlockedWord
+    fields = ('word',)
+    template_name = 'manage_blog/blocked_words/blocked-words-form.html'
+
+    def get_success_url(self):
+        return reverse('admin_blocked_words')
+
+
+class DeleteBlockedWordsView(View):
+    @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])
+    def post(self, request):
+        word = BlockedWord.objects.get(pk=request.POST['w_id'])
+        word.delete()
+        return redirect('admin_blocked_words')
 
 
 class PostsAdminView(View):

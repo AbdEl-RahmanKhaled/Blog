@@ -13,5 +13,10 @@ urlpatterns = [
     path('edit-user/<pk>', views.EditUserView.as_view(), name='admin_edit_user'),
     path('create-user', views.CreateUserView.as_view(), name='admin_create_user'),
     path('block-unblock', views.BlockUnblockView.as_view(), name='admin_block_unblock_user'),
+    # Blocked Words
+    path('blocked-words', views.AllBlockedWordsView.as_view(), name='admin_blocked_words'),
+    path('edit-word/<pk>', views.EditBlockedWordsView.as_view(), name='admin_edit_blocked_word'),
+    path('add-word', views.CreateBlockedWordsView.as_view(), name='admin_add_blocked_word'),
+    path('delete-word', views.DeleteBlockedWordsView.as_view(), name='admin_delete_blocked_word'),
 
 ]
