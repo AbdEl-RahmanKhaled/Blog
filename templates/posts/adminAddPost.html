@@ -1,0 +1,17 @@
+{% extends '_layout.html' %}
+
+{% block head_title %}
+
+Edit Post
+
+{% endblock head_title %}
+
+{% block content %}
+
+    <form method="post">{% csrf_token %}
+        {{ post.as_p }}
+        <button type="submit">Add</button>
+        <button type="reset">Reset</button>
+    </form>
+
+{% endblock content %}
