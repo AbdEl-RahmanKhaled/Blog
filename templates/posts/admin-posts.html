@@ -17,11 +17,9 @@
                         <table class="table table-striped align-middle">
                             <thead class="table-dark">
                             <tr>
-                                <td class="col col-md-9">Title</td>
+                                <td class="col col-md-8">Title</td>
                                 <td >Category</td>
-                                <td >Content</td>
-                                <td >Photo</td>
-                                <td >Actions</td>
+                                <td colspan="2" >Actions</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -30,8 +28,6 @@
                                     <tr>
                                         <td class="col col-md-9">{{ post.title}}</td>
                                         <td class="col col-md-9">{{ post.category}}</td>
-                                        <td class="col col-md-9">{{ post.content}}</td>
-                                        <td class="col col-md-9">{{ post.pic}}</td>
                                         <td>
                                             <form method="post" action="{% url 'admin_delete_post' post.id %}">
                                                 {% csrf_token %}

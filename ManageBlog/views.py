@@ -158,7 +158,7 @@ class PostEditAdmin(UpdateView):
 
 class AddPostAdmin(CreateView):
     model = Post
-    fields = ('title', 'category', 'content')
+    fields = ('title', 'category', 'content', 'pic')
     template_name = 'posts/adminAddPost.html'
 
     def get_success_url(self):
