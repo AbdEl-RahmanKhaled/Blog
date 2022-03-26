@@ -48,11 +48,11 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    {% if users.has_other_pages %}
+                    {% if categories.has_other_pages %}
                         <ul class="pagination">
-                            {% if users.has_previous %}
+                            {% if categories.has_previous %}
                                 <li class="page-item">
-                                    <a href="?page={{ users.previous_page_number }}" class="page-link">&laquo;</a>
+                                    <a href="?page={{ categories.previous_page_number }}" class="page-link">&laquo;</a>
                                 </li>
                             {% else %}
                                 <li class="page-item disabled">
@@ -60,8 +60,8 @@
                                 </li>
                             {% endif %}
 
-                            {% for i in users.paginator.page_range %}
-                                {% if users.number == i %}
+                            {% for i in categories.paginator.page_range %}
+                                {% if categories.number == i %}
                                     <li class="page-item active">
                                         <a class="page-link">{{ i }}</a>
                                     </li>
@@ -72,9 +72,9 @@
                                 {% endif %}
                             {% endfor %}
 
-                            {% if users.has_next %}
+                            {% if categories.has_next %}
                                 <li class="page-item">
-                                    <a href="?page={{ users.next_page_number }}" class="page-link">&raquo;</a>
+                                    <a href="?page={{ categories.next_page_number }}" class="page-link">&raquo;</a>
                                 </li>
                             {% else %}
                                 <li class="page-item disabled">

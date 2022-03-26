@@ -71,7 +71,7 @@ class AllBlockedWordsView(View):
     @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])
     def get(self, request):
         f_words = BlockedWord.objects.all().order_by('word')
-        paginator = Paginator(f_words, 7)
+        paginator = Paginator(f_words, 5)
         page = request.GET.get('page')
         page_words = paginator.get_page(page)
         context = {
@@ -115,13 +115,23 @@ class DeleteBlockedWordsView(View):
 
 # >>>>>>>>>>>>>>>>>>>>>>> POST >>>>>>>>>>>>>>>>>>
 class PostsAdminView(View):
-    template = 'posts/admin-posts.html'
+    # template = 'posts/admin-posts.html'
 
     def get(self, request):
+        posts = Post.objects.all()
+        paginator = Paginator(posts, 5)
+        page = request.GET.get('page')
+        page_posts = paginator.get_page(page)
         context = {
-            'posts': Post.objects.all()
+            'posts': page_posts
         }
-        return render(request, self.template, context)
+        return render(request, 'posts/admin-posts.html', context)
+
+    # def get(self, request):
+    #     context = {
+    #         'posts': Post.objects.all()
+    #     }
+    #     return render(request, self.template, context)
 
 
 # def PostsAdminView(request):
@@ -203,8 +213,8 @@ def PostDeleteAdmin(request, p_id):
 class ListCategories(View):
     @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])
     def get(self, request):
-        category = Category.objects.all()
-        paginator = Paginator(category, 7)
+        category = Category.objects.exclude(id="6")
+        paginator = Paginator(category, 5)
         page = request.GET.get('page')
         page_category = paginator.get_page(page)
         context = {
