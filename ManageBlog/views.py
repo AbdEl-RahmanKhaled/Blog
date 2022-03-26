@@ -113,7 +113,7 @@ class DeleteBlockedWordsView(View):
         word.delete()
         return redirect('admin_blocked_words')
 
-
+# >>>>>>>>>>>>>>>>>>>>>>> POST >>>>>>>>>>>>>>>>>>
 class PostsAdminView(View):
     template = 'posts/admin-posts.html'
 
