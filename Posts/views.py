@@ -98,6 +98,12 @@ def unsub_category(request, cat_id):
     return redirect(posts)
 
 
+def search(request):
 
-
-
+        searched = request.GET['searched']
+        post = Post.objects.filter(title__icontains=searched)
+        paginator = Paginator(post, 2)
+        page = request.GET.get('page')
+        page_posts = paginator.get_page(page)
+        context = {"posts": page_posts}
+        return render(request, 'posts/search_result.html', context)
