@@ -21,6 +21,10 @@
                 {% for p in posts %}
                     <div class="card mb-3">
                         <div class="card-body">
+                            {% if p.category.id != 6  %}
+                                 <h1>{{  p.category }}</h1>
+                            {% endif %}
+
                             <h3 class="card-title mt-3">{{ p.title }}</h3>
                             <p class="card-text">{{ p.content|safe|truncatewords:"10"|linebreaks }}
                                 <a class="btn btn-outline-info me-2" role="button" href="{% url 'postDetails' p.id %}">

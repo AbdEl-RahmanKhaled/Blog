@@ -10,6 +10,7 @@
                     <h1 class="display-4">{{ post.title }}</h1>
                     <p class="lead">
                         <i class="fas fa-clock"></i> {{ post.date }}</p>
+
                 </div>
             </div>
         </div>
@@ -43,19 +44,40 @@
                     <!-- Description -->
                 </div>
                 <div class="col-md-3">
-                    <div class="card mb-3">
-                        <img class="card-img-top" src="assets/img/realtors/kyle.jpg" alt="Seller of the month">
-                        <div class="card-body">
-                            <h5 class="card-title">Property Realtor</h5>
-                            <h6 class="text-secondary">Kyle Brown</h6>
+
+                    <div class="card-body">
+                            <h5 class="card-title"> {{ post.likes }} like</h5>
+                            <h5>{{ post.dislikes }} dislikes</h5>
+                            <h6 class="text-secondary">{{ post.date }}</h6>
                         </div>
+                    <div class="card mb-3">
+
                     </div>
                     <div class="row">
                         <div class="col">
-                            <button class="btn-success btn-block btn-lg">Like</button>
+
+
+                            <form method="post" action="{% url 'like' %}">
+                                {% csrf_token %}
+                                <input name="p_id" hidden value="{{ post.id }}">
+                                <button class="btn-success btn-block btn-lg" type="submit">Like</button>
+                            </form>
+                            <form method="post" action="{% url 'dislikes' %}">
+                                {% csrf_token %}
+                                <input name="p_id" hidden value="{{ post.id }}">
+
+                            </form>
+
                         </div>
                         <div class="col">
-                            <button class="btn-danger btn-block btn-lg">Dislike</button>
+                            <form method="post" action="{% url 'dislikes' %}">
+                                {% csrf_token %}
+                                <input name="p_id" hidden value="{{ post.id }}">
+                                <button class="btn-danger btn-block btn-lg" type="submit">Dislike</button>
+                            </form>
+ {% if post.category.id != 6  %}
+                                 <h1>{{  post.category }}</h1>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -74,7 +96,7 @@
         </div>
     </section>
     <section class="container mt-5">
-        <div class="card mb-2">
+        <div class="card mb-2" style="border:none">
             <div class="card-body">
                 <section class="container mt-4">
                     <form method="post" action="{% url 'comment' %}">
