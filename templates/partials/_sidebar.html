@@ -7,7 +7,7 @@
         <svg class="bi me-2" width="40" height="32">
             <use xlink:href="#bootstrap"/>
         </svg>
-        <span class="fs-4">Sidebar</span>
+        <span class="fs-4">Categories</span>
     </a>
     <hr/>
     {% if 'manage_blog' in request.path %}
@@ -31,7 +31,8 @@
                 </a>
             </li>
             <li>
-                <a href="{% url 'admin_categories-list' %}" class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
+                <a href="{% url 'admin_categories-list' %}"
+                   class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
                     <svg class="bi me-2" width="16" height="16">
                         <use xlink:href="#table"/>
                     </svg>
@@ -59,46 +60,8 @@
         <hr/>
     {% else %}
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link active" aria-current="page">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#home"/>
-                    </svg>
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#speedometer2"/>
-                    </svg>
-                    Dashboard
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#table"/>
-                    </svg>
-                    Orders
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#grid"/>
-                    </svg>
-                    Products
-                </a>
-            </li>
-            <li>
-                <a href="#" class="nav-link text-white">
-                    <svg class="bi me-2" width="16" height="16">
-                        <use xlink:href="#people-circle"/>
-                    </svg>
-                    Customers
-                </a>
-            </li>
+            {% block categories %}
+            {% endblock %}
         </ul>
         <hr/>
     {% endif %}

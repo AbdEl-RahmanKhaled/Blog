@@ -1,6 +1,8 @@
 {% extends '_layout.html' %}
 {% load static %}
 
+
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -15,13 +17,9 @@
          aria-label="Search" >
               </form>
 </div>
-
-
                 </div>
                 {% for p in posts %}
-
                     <div class="card mb-3">
-
                         <div class="card-body">
                             <h3 class="card-title mt-3">{{ p.title }}</h3>
                             <p class="card-text">{{ p.content|safe|truncatewords:"10"|linebreaks }}
@@ -32,7 +30,6 @@
                             <a href="{% url 'postDetails' p.id %}">
                                 <img src="{{ p.pic }}" class="card-img-bottom">
                             </a>
-
                             <div style="display: flex;justify-content:space-between">
                                 <p class="card-text" style="margin-top: 10px">
                                     <small class="text-muted">{{ p.date }}</small>

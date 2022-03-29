@@ -16,19 +16,33 @@ def index(request):
 # @verified_acc_only
 def posts(request):
     post = Post.objects.all().order_by('-date')
+    subbed_cat = Account.objects.get(pk=request.user.id).accounts.all()
+    subbed_post = Post.objects.filter(category__in=list(subbed_cat.values_list('id', flat=True)))
+    unsubbed_cat = Category.objects.exclude(category__in=list(subbed_cat.values_list('category', flat=True)))
+    print(subbed_post)
+    print(unsubbed_cat)
+    print(subbed_cat)
     paginator = Paginator(post, 2)
     page = request.GET.get('page')
     page_posts = paginator.get_page(page)
-    context = {"posts": page_posts}
+    context = {"posts": page_posts,
+               "subbed_cat": subbed_cat,
+               "unsubbed_cat": unsubbed_cat,
+               "subbed_post": subbed_post}
     return render(request, 'posts/timeline.html', context)
 
 
 def post_detail(request, p_id):
     post = Post.objects.get(id=p_id)
     comments = Comment.objects.filter(post=post).order_by('-created_on')
+    subbed_cat = Account.objects.get(pk=request.user.id).accounts.all()
+    unsubbed_cat = Category.objects.exclude(category__in=list(subbed_cat.values_list('category', flat=True)))
+
     context = {
         'post': post,
-        'comments': comments
+        'comments': comments,
+        "subbed_cat": subbed_cat,
+        "unsubbed_cat": unsubbed_cat
     }
     return render(request, 'posts/Post_detail.html', context)
 
@@ -43,9 +57,7 @@ def like(request):
             post.likes -= 1
             post_likes.delete()
             post.save()
-
         else:
-
             if post_dislikes.exists():
                 post_dislikes.delete()
                 post.dislikes -= 1
@@ -54,7 +66,6 @@ def like(request):
             post.likes += 1
             new_like.save()
             post.save()
-
     return redirect('postDetails', p_id=request.POST['p_id'])
 
 
@@ -62,17 +73,14 @@ def dislikes(request):
     post = Post.objects.get(id=request.POST['p_id'])
     post_dislikes = PostDislikes.objects.filter(account_id=request.user.id, post=post)
     post_likes = PostLikes.objects.filter(account_id=request.user.id, post=post)
-
     if post_dislikes.exists():
         post.dislikes -= 1
         post_dislikes.delete()
         post.save()
     else:
-
         if post_likes.exists():
             post_likes.delete()
             post.likes -= 1
-
         new_dislike = PostDislikes(account_id=request.user.id, post=post)
         post.dislikes += 1
         new_dislike.save()
@@ -80,11 +88,17 @@ def dislikes(request):
     return redirect('postDetails', p_id=request.POST['p_id'])
 
 
+# def list_cat(request):
+#     cats = Category.objects.all()
+#     context = {'all_cat': cats}
+#     # return render(request, 'posts/timeline.html', context)
+#     return render(request, '_layout.html', context)
+
+
 def sub_category(request, cat_id):
+    print("inside sub")
     account = Account.objects.get(id=request.user.id)
     cat = Category.objects.get(id=cat_id)
-    # subbed_cat = account.objects.filter(subbed_users__category=cat)
-    # if not subbed_cat.exists():
     cat.subbed_users.add(account)
     return redirect(posts)
 
@@ -92,14 +106,11 @@ def sub_category(request, cat_id):
 def unsub_category(request, cat_id):
     account = Account.objects.get(id=request.user.id)
     cat = Category.objects.get(id=cat_id)
-    # subbed_cat = account.objects.filter(subbed_users__category=cat)
-    # if not subbed_cat.exists():
     cat.subbed_users.remove(account)
     return redirect(posts)
 
 
 def search(request):
-
         searched = request.GET['searched']
         post = Post.objects.filter(title__icontains=searched)
         paginator = Paginator(post, 2)

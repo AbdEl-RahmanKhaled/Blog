@@ -8,6 +8,5 @@ urlpatterns = [
     path('posts/dislikes', views.dislikes, name="dislikes"),
     path('posts/sub_category/<cat_id>', views.sub_category, name="sub_category"),
     path('posts/unsub_category/<cat_id>', views.unsub_category, name="unsub_category"),
-    path('posts/search_result', views.search, name="search")
-
+    path('posts/search_result', views.search, name="search"),
 ]
