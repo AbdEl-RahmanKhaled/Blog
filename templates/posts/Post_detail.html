@@ -27,9 +27,13 @@
                     <li class="breadcrumb-item">
                         <a href="{% url 'index' %}">Posts</a>
                     </li>
-                    <li class="breadcrumb-item active">{{ post.title }}</li>
+                    <li class="breadcrumb-item active" >{{ post.title }}</li>
                 </ol>
             </nav>
+             {% if post.category_id != 6 %}
+             <span class="badge rounded-pill bg-info text-dark" style="font-size: 16px;">{{ post.category }}</span>
+            {% endif %}
+
         </div>
     </section>
 
@@ -46,10 +50,10 @@
                 <div class="col-md-3">
 
                     <div class="card-body">
-                            <h5 class="card-title"> {{ post.likes }} like</h5>
-                            <h5>{{ post.dislikes }} dislikes</h5>
-                            <h6 class="text-secondary">{{ post.date }}</h6>
-                        </div>
+                        <h5 class="card-title"> {{ post.likes }} like</h5>
+                        <h5>{{ post.dislikes }} dislikes</h5>
+                        <h6 class="text-secondary">{{ post.date }}</h6>
+                    </div>
                     <div class="card mb-3">
 
                     </div>
@@ -75,9 +79,6 @@
                                 <input name="p_id" hidden value="{{ post.id }}">
                                 <button class="btn-danger btn-block btn-lg" type="submit">Dislike</button>
                             </form>
- {% if post.category.id != 6  %}
-                                 <h1>{{  post.category }}</h1>
-                            {% endif %}
                         </div>
                     </div>
                 </div>

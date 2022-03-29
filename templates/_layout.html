@@ -87,7 +87,7 @@
                                     <li style="margin-bottom: 8px;">
                                         <form method="POST" action="{% url 'sub_category' cat.id %}">
                                             {% csrf_token %}
-                                            <button class="btn btn-secondary"
+                                            <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="Press to sub to this category"
                                                     role="button" type="submit"
                                                     style="min-width: 240px;">
                                                 {{ cat.category }} </button>
@@ -104,7 +104,7 @@
                                 <li style="margin-bottom: 8px;">
                                     <form method="POST" action="{% url 'unsub_category' cat.id %}">
                                         {% csrf_token %}
-                                        <button class="btn btn-primary"
+                                        <button class="btn btn-secondary" data-bs-placement="right" title="Press to unsub to this category"
                                                 role="button" type="submit"
                                                 style="min-width: 240px;">
                                             {{ cat.category }} </button>
