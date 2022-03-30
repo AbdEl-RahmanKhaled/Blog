@@ -104,13 +104,8 @@ def unsub_category(request, cat_id):
 def search(request):
     searched = request.GET['searched']
     post = Post.objects.filter(Q(title__icontains=searched) | Q(category__category__icontains=searched))
-    paginator = Paginator(post, 5)
-    page = request.GET.get('page')
-    page_posts = paginator.get_page(page)
-
     subbed_unsubbed = get_cat(request)
-
-    context = {"posts": page_posts}
+    context = {"posts": post}
     context.update(subbed_unsubbed)
     return render(request, 'posts/search_result.html', context)
 
