@@ -3,13 +3,15 @@
 
 {% block title %} {{ post.title }} {% endblock %}
 {% block content %}
+    <div class="container container-fluid"
+         style="border-radius: 12px; border:#1b1b1b solid; margin-top: 30px; margin-bottom: 30px;">
     <section id="showcase-inner" class="py-5 text-white">
         <div class="container">
             <div class="row text-center">
                 <div class="col-md-12">
-                    <h1 class="display-4">{{ post.title }}</h1>
+                    <h1 class="display-4" style="color: #1b1b1b">{{ post.title }}</h1>
                     <p class="lead">
-                        <i class="fas fa-clock"></i> {{ post.date }}</p>
+                        {#                            <i class="fas fa-clock"></i> {{ post.date }}</p>#}
 
                 </div>
             </div>
@@ -27,11 +29,12 @@
                     <li class="breadcrumb-item">
                         <a href="{% url 'index' %}">Posts</a>
                     </li>
-                    <li class="breadcrumb-item active" >{{ post.title }}</li>
+                    <li class="breadcrumb-item active">{{ post.title }}</li>
                 </ol>
             </nav>
-             {% if post.category_id != 6 %}
-             <span class="badge rounded-pill bg-info text-dark" style="font-size: 16px;">{{ post.category }}</span>
+            {% if post.category_id != 6 %}
+                <span class="badge rounded-pill bg-info text-dark"
+                      style="font-size: 16px;">{{ post.category }}</span>
             {% endif %}
 
         </div>
@@ -85,6 +88,7 @@
             </div>
         </div>
     </section>
+
     <section class="container mt-5">
         <div class="card">
             <div class="card-body">
@@ -118,33 +122,55 @@
                         </div>
                     </form>
                 </section>
-                <section class="container mt-2">
-                    <div class="card">
-                        <div class="card-body">
-                            {% if comments %}
-                                {% for comment in comments %}
-                                    <div class="card mb-2">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <h6 class="mr-0">{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
-                                            </div>
-                                            <div class="row">
-                                                <h6 class="mr-0">{{ comment.created_on }}</h6>
-                                            </div>
-                                            <div class="row">
-                                                <p>{{ comment.content }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-                </section>
             </div>
         </div>
-
     </section>
+
+    <div class="accordion" id="commentsAccordion" style="margin-bottom: 30px;">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                    Show all comments
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                 data-bs-parent="#commentsAccordion">
+                <div class="accordion-body">
+                    <section class="container mt-5">
+                        <div class="card mb-2" style="border:none">
+                            <div class="card-body">
+                                <section class="container mt-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {% if comments %}
+                                                {% for comment in comments %}
+                                                    <div class="card mb-2">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <h6 class="mr-0">{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
+                                                            </div>
+                                                            <div class="row">
+                                                                <h6 class="mr-0">{{ comment.created_on }}</h6>
+                                                            </div>
+                                                            <div class="row">
+                                                                <p>{{ comment.content }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {#<!DOCTYPE html>#}

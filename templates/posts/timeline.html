@@ -8,24 +8,27 @@
         <div class="row">
             <div class="col col-lg-9 mx-auto">
                 <div style="margin-bottom: 10px ; margin-top: 200px">
-    <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1"> <svg style="display: inline" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1"> <svg style="display: inline" xmlns="http://www.w3.org/2000/svg"
+                                                         width="16" height="16" fill="currentColor" class="bi bi-search"
+                                                         viewBox="0 0 16 16">
   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
 </svg> </span>
-         <form type="get" action="{% url 'search' %}" style="width: 230px">
-  <input class="form-control" type="search" name="searched" placeholder="Search by post title or tag"
-         aria-label="Search" >
-              </form>
-</div>
+                        <form type="get" action="{% url 'search' %}" style="width: 230px">
+                            <input class="form-control" type="search" name="searched"
+                                   placeholder="Search by post title or tag"
+                                   aria-label="Search">
+                        </form>
+                    </div>
                 </div>
                 {% for p in posts %}
                     <div class="card mb-3">
                         <div class="card-body">
-                            {% if p.category.id != 6  %}
-                                 <span class="badge rounded-pill bg-info text-dark" style="font-size: 16px;">{{  p.category }}</span>
-                            {% endif %}
-
                             <h3 class="card-title mt-3">{{ p.title }}</h3>
+                            {% if p.category.id != 6 %}
+                                <span class="badge rounded-pill bg-info text-dark"
+                                      style="font-size: 16px;">{{ p.category }}</span>
+                            {% endif %}
                             <p class="card-text">{{ p.content|safe|truncatewords:"10"|linebreaks }}
                                 <a class="btn btn-outline-info me-2" role="button" href="{% url 'postDetails' p.id %}">
                                     read more

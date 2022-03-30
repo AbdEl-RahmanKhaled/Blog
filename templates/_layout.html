@@ -19,9 +19,8 @@
 
 <!-- Navbar -->
 {% include 'partials/_navbar.html' %}
-<div style="min-height: 93.1%;" class="container-fluid p-0">
+<div style="min-height: 93.1%; background-color: #EEEEEE" class="container-fluid p-0">
     <div class="row m-0">
-
         {% if 'account' not in request.path %}
             <div class="col-lg-2 position-fixed p-0" style="height: 100%; min-width: 280px" id="sticky-sidebar">
                 {#                {% include 'partials/_sidebar.html' %}#}
@@ -87,8 +86,9 @@
                                     <li style="margin-bottom: 8px;">
                                         <form method="POST" action="{% url 'sub_category' cat.id %}">
                                             {% csrf_token %}
-                                            <button class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="right" title="Press to sub to this category"
-                                                    role="button" type="submit"
+                                            <button class="btn btn-primary" data-bs-toggle="tooltip"
+                                                    data-bs-placement="right" title="Press to sub to this category"
+                                                    role="button" type="submit" id="liveToastBtn"
                                                     style="min-width: 240px;">
                                                 {{ cat.category }} </button>
                                         </form>
@@ -96,7 +96,6 @@
                                 {% endif %}
                             {% endfor %}
                             <hr class="dropdown-divider">
-
                             <span class="fs-4 border-start-0"
                                   style="border: #ffffff; border-radius: 20px; margin-bottom: 14px;">Subscriptions</span>
 
@@ -104,7 +103,8 @@
                                 <li style="margin-bottom: 8px;">
                                     <form method="POST" action="{% url 'unsub_category' cat.id %}">
                                         {% csrf_token %}
-                                        <button class="btn btn-secondary" data-bs-placement="right" title="Press to unsub to this category"
+                                        <button class="btn btn-secondary" data-bs-placement="right"
+                                                title="Press to unsub to this category"
                                                 role="button" type="submit"
                                                 style="min-width: 240px;">
                                             {{ cat.category }} </button>
@@ -123,6 +123,20 @@
             {% block content %}
 
             {% endblock %}
+        </div>
+    </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="...">
+            <strong class="me-auto">Bootstrap</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Hello, world! This is a toast message.
         </div>
     </div>
 </div>
