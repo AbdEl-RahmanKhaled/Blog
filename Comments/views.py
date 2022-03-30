@@ -1,11 +1,15 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+
+from Helpers.Decorators.auth_decorators import verified_acc_only
 from .models import Comment, BlockedWord
 import re
 
 
 # Create your views here.
 
-
+@login_required(redirect_field_name=None, login_url='/account/login')
+@verified_acc_only
 def comment(request):
     if request.method == 'POST':
         content = request.POST['comment']

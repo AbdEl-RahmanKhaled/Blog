@@ -12,23 +12,21 @@ def index(request):
     return render(request, '_layout.html')
 
 
-@login_required(redirect_field_name=None, login_url='/account/login')
-# @verified_acc_only
 def posts(request):
     post = Post.objects.all().order_by('-date')
-    subbed_cat = Account.objects.get(pk=request.user.id).accounts.all()
-    subbed_post = Post.objects.filter(category__in=list(subbed_cat.values_list('id', flat=True)))
-    unsubbed_cat = Category.objects.exclude(category__in=list(subbed_cat.values_list('category', flat=True)))
-    print(subbed_post)
-    print(unsubbed_cat)
-    print(subbed_cat)
-    paginator = Paginator(post, 2)
+    unsubbed_cat = Category.objects.all()
+    subbed_cat = []
+    if request.user.is_authenticated:
+        subbed_cat = Account.objects.get(pk=request.user.id).accounts.all()
+        post = Post.objects.filter(category__in=list(subbed_cat.values_list('id', flat=True)))
+        unsubbed_cat = Category.objects.exclude(category__in=list(subbed_cat.values_list('category', flat=True)))
+
+    paginator = Paginator(post, 5)
     page = request.GET.get('page')
     page_posts = paginator.get_page(page)
     context = {"posts": page_posts,
                "subbed_cat": subbed_cat,
-               "unsubbed_cat": unsubbed_cat,
-               "subbed_post": subbed_post}
+               "unsubbed_cat": unsubbed_cat}
     return render(request, 'posts/timeline.html', context)
 
 
@@ -47,6 +45,8 @@ def post_detail(request, p_id):
     return render(request, 'posts/Post_detail.html', context)
 
 
+@login_required(redirect_field_name=None, login_url='/account/login')
+@verified_acc_only
 def like(request):
     if request.method == 'POST':
         post = Post.objects.get(id=request.POST['p_id'])
@@ -69,6 +69,8 @@ def like(request):
     return redirect('postDetails', p_id=request.POST['p_id'])
 
 
+@login_required(redirect_field_name=None, login_url='/account/login')
+@verified_acc_only
 def dislikes(request):
     post = Post.objects.get(id=request.POST['p_id'])
     post_dislikes = PostDislikes.objects.filter(account_id=request.user.id, post=post)
@@ -88,13 +90,8 @@ def dislikes(request):
     return redirect('postDetails', p_id=request.POST['p_id'])
 
 
-# def list_cat(request):
-#     cats = Category.objects.all()
-#     context = {'all_cat': cats}
-#     # return render(request, 'posts/timeline.html', context)
-#     return render(request, '_layout.html', context)
-
-
+@login_required(redirect_field_name=None, login_url='/account/login')
+@verified_acc_only
 def sub_category(request, cat_id):
     print("inside sub")
     account = Account.objects.get(id=request.user.id)
@@ -103,6 +100,8 @@ def sub_category(request, cat_id):
     return redirect(posts)
 
 
+@login_required(redirect_field_name=None, login_url='/account/login')
+@verified_acc_only
 def unsub_category(request, cat_id):
     account = Account.objects.get(id=request.user.id)
     cat = Category.objects.get(id=cat_id)
@@ -111,10 +110,10 @@ def unsub_category(request, cat_id):
 
 
 def search(request):
-        searched = request.GET['searched']
-        post = Post.objects.filter(title__icontains=searched)
-        paginator = Paginator(post, 2)
-        page = request.GET.get('page')
-        page_posts = paginator.get_page(page)
-        context = {"posts": page_posts}
-        return render(request, 'posts/search_result.html', context)
+    searched = request.GET['searched']
+    post = Post.objects.filter(title__icontains=searched)
+    paginator = Paginator(post, 5)
+    page = request.GET.get('page')
+    page_posts = paginator.get_page(page)
+    context = {"posts": page_posts}
+    return render(request, 'posts/search_result.html', context)
