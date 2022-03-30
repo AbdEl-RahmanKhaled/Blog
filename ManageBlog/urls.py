@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     # posts
     path('submit-edit-post', views.PostEditAdmin.as_view(), name="adminSubmitEditPost"),
-    path('delete-post/<p_id>', views.PostDeleteAdmin, name="admin_delete_post"),
+    path('delete-post/<p_id>', views.post_delete_admin, name="admin_delete_post"),
     path('add-post', views.AddPostAdmin.as_view(), name="admin_add_post"),
     path('posts', views.PostsAdminView.as_view(), name="admin-posts"),
     path('edit-post/<pk>', views.PostEditAdmin.as_view(), name="admin-edit-post"),

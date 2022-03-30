@@ -113,6 +113,7 @@ class DeleteBlockedWordsView(View):
         word.delete()
         return redirect('admin_blocked_words')
 
+
 # >>>>>>>>>>>>>>>>>>>>>>> POST >>>>>>>>>>>>>>>>>>
 class PostsAdminView(View):
     # template = 'posts/admin-posts.html'
@@ -125,42 +126,13 @@ class PostsAdminView(View):
         context = {
             'posts': page_posts
         }
-        return render(request, 'posts/admin-posts.html', context)
-
-    # def get(self, request):
-    #     context = {
-    #         'posts': Post.objects.all()
-    #     }
-    #     return render(request, self.template, context)
-
-
-# def PostsAdminView(request):
-#     # template = 'admin-posts.html'
-#     posts = Post.objects.all()
-#     context = {"object_list": posts}
-#     return render(request, 'posts/admin-posts.html', context)
-
-
-# class PostEditAdmin(View):
-#     template = 'posts/adminEditPost.html'
-#     post = None
-#
-#     def get(self, request, p_id):
-#         self.post = Post.objects.get(p_id)
-#         post = PostForm(instance=self.post)
-#         context = {'post': post}
-#         return render(request, self.template, context)
-#
-#     def post(self, request):
-#         # post = Post(**request.POST)
-#         # post.save()
-#         return redirect('admin-posts')
+        return render(request, 'manage_blog/posts/admin-posts.html', context)
 
 
 class PostEditAdmin(UpdateView):
     model = Post
     fields = ('title', 'category', 'content', 'pic')
-    template_name = 'posts/adminEditPost.html'
+    template_name = 'manage_blog/posts/adminEditPost.html'
 
     def get_success_url(self):
         return reverse('admin-posts')
@@ -169,46 +141,19 @@ class PostEditAdmin(UpdateView):
 class AddPostAdmin(CreateView):
     model = Post
     fields = ('title', 'category', 'content', 'pic')
-    template_name = 'posts/adminAddPost.html'
+    template_name = 'manage_blog/posts/adminAddPost.html'
 
     def get_success_url(self):
         return reverse('admin-posts')
 
 
-# class PostDeleteAdmin(View):
-#     def post(self, request):
-#         try:
-#             post = Post.objects.get(request.POST['p_id'])
-#             post.delete()
-#         except Exception:
-#             messages.error(request, 'Not valid post id')
-#         return redirect('admin-posts')
-
-
-def PostDeleteAdmin(request, p_id):
+def post_delete_admin(request, p_id):
     post = Post.objects.get(id=p_id)
     post.delete()
     return redirect('admin-posts')
 
 
-# def PostDeleteAdmin(View):
-#     def post(self, request):
-#         post = Post.objects.get(p_id=request.POST['p_id'])
-#         post.delete()
-#         return redirect('admin-posts')
-
-# def AddPostAdmin(request):
-#     post = PostForm()
-#     # template = 'posts/admin-Posts.html'
-#     context = {'post': post}
-#     return render(request, 'posts/adminAddPost.html', context)
-
-
-
-
-
-##############Categores##############
-
+# >>>>>>>>>>>>>>>>>>>>>>> Categories >>>>>>>>>>>>>>>>>>
 
 class ListCategories(View):
     @method_decorator([login_required(redirect_field_name=None, login_url='/account/login'), superuser_required])

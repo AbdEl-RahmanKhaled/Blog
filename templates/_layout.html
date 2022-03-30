@@ -35,45 +35,29 @@
                                 <a href="{% url 'admin_users_list' %}"
                                    class="nav-link {% if 'user' in request.path %} active {% endif %}"
                                    aria-current="page">
-                                    <svg class="bi me-2" width="16" height="16">
-                                        <use xlink:href="#home"/>
-                                    </svg>
+
                                     Users
                                 </a>
                             </li>
                             <li>
                                 <a href="{% url 'admin-posts' %}"
                                    class="nav-link text-white {% if 'post' in request.path %} active {% endif %}">
-                                    <svg class="bi me-2" width="16" height="16">
-                                        <use xlink:href="#speedometer2"/>
-                                    </svg>
+
                                     Posts
                                 </a>
                             </li>
                             <li>
                                 <a href="{% url 'admin_categories-list' %}"
                                    class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
-                                    <svg class="bi me-2" width="16" height="16">
-                                        <use xlink:href="#table"/>
-                                    </svg>
+
                                     Categories
                                 </a>
                             </li>
                             <li>
                                 <a href="{% url 'admin_blocked_words' %}"
                                    class="nav-link text-white {% if 'word' in request.path %} active {% endif %}">
-                                    <svg class="bi me-2" width="16" height="16">
-                                        <use xlink:href="#grid"/>
-                                    </svg>
+
                                     Forbidden Words
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="nav-link text-white">
-                                    <svg class="bi me-2" width="16" height="16">
-                                        <use xlink:href="#people-circle"/>
-                                    </svg>
-                                    Customers
                                 </a>
                             </li>
                         </ul>
@@ -141,8 +125,6 @@
     </div>
 </div>
 
-<!-- Footer -->
-{#{% include 'partials/_footer.html' %}#}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
