@@ -5,8 +5,10 @@ from Accounts.models import Account
 class Category(models.Model):
     category = models.CharField(max_length=30, blank=False, null=False, verbose_name='Category')
     subbed_users = models.ManyToManyField(Account, related_name='accounts')
+
     def __str__(self):
         return self.category
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100, blank=False, verbose_name='Title')
@@ -17,6 +19,10 @@ class Post(models.Model):
                                  related_name='posts_related')
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
+
+    def delete(self, using=None, keep_parents=False):
+        self.pic.storage.delete(self.pic.name)
+        super().delete()
 
     def __str__(self):
         return self.title
@@ -30,5 +36,3 @@ class PostLikes(models.Model):
 class PostDislikes(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-
-
