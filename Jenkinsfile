@@ -23,13 +23,13 @@ pipeline {
            steps {
                script {
                     echo 'deploying image....'
-                    sh "docker run -d --name ${APP_NAME} --network app-nw -p80:8000 ${IMG_NAME}:${NEW_TAG}"
+                    sh "docker run -d --name ${APP_NAME} --network app-nw -v /home/ubuntu/media:/usr/src/blog/media -p80:8000 ${IMG_NAME}:${NEW_TAG}"
                }
             }
         }
        stage('Push to Dockerhub'){
            steps {
-               echo 'puhsing to dockerhub repo...'
+               echo 'pushing to dockerhub repo...'
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASS')]) {
                     sh 'echo $PASS | docker login -u $USERNAME --password-stdin'
                     sh "docker push ${IMG_NAME}:${NEW_TAG}"
