@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+
+.bg-bar {
+    background: linear-gradient(270deg, #1A132F 0%, red 100%) !important;
+}
+
+.nav-bg {
+    background: #1A132F;
+}
+
+.logo{
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+.nav-link {
+    color: rgb(255, 255, 255) !important;
+}
+
+.navbar-nav > li {
+    font-family: "Lato Regular", sans-serif;
+    padding-right: 20px;
+    padding-left: 5px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.middle-elements :hover {
+    color: #2ef1f5 !important;
+    transition: 300ms linear;
+    cursor: pointer;
+}
+
+.middle-elements :focus {
+    color: #2ef1f5 !important;
+}
+
+.nav-login {
+    display: flex;
+    align-items: center;
+}
+
+.nav-login:hover {
+    cursor: pointer;
+    text-align: center;
+    border-color: #00ced1;
+    border-radius: 1ex;
+    background-color: #00ced1;
+    transition: 0.05s ease-in-out;
+}
+
+.dropdown-menu {
+    background-color: rgb(83, 82, 82);
+}
+
+.dropdown-menu :hover {
+    background-color: rgb(95, 95, 95);
+}
+
+.logout {
+    color: red !important;
+}
