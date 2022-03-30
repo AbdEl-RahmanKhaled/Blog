@@ -1,4 +1,3 @@
-
 import os
 from pathlib import Path
 
@@ -16,7 +15,7 @@ SECRET_KEY = os.getenv('PRIVET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ec2-44-203-155-91.compute-1.amazonaws.com', ]
 
 # Application definition
 

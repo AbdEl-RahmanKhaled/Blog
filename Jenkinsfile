@@ -13,9 +13,9 @@ pipeline {
        stage('build') {
            steps {
                 echo 'Building Docker image...'
-//                 sh "docker stop ${APP_NAME}"
-//                 sh "docker rm -f ${APP_NAME}"
-//                 sh "docker rmi -f ${IMG_NAME}:${OLD_TAG}"
+                sh "docker stop ${APP_NAME}"
+                sh "docker rm -f ${APP_NAME}"
+                sh "docker rmi -f ${IMG_NAME}:${OLD_TAG}"
                 sh "docker build -t ${IMG_NAME}:${NEW_TAG} ."
            }
        }
@@ -29,7 +29,7 @@ pipeline {
         }
        stage('Push to Dockerhub'){
            steps {
-               echo 'puhsing to dockerhub repo...'
+               echo 'pushing to dockerhub repo...'
                 withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASS')]) {
                     sh 'echo $PASS | docker login -u $USERNAME --password-stdin'
                     sh "docker push ${IMG_NAME}:${NEW_TAG}"
