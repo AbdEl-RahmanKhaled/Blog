@@ -12,7 +12,10 @@ body {
 .bg-bar {
     background: #1A132F;
 }
-
+.forms-logo{
+    margin-bottom: 20px;
+    font-size: 40px;
+}
 .nav-bg {
     background: #1A132F;
 }

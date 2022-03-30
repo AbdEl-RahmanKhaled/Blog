@@ -4,7 +4,7 @@
   margin: 0;
   box-sizing: border-box;
 }
-.imglogin img {
+.imglogin span {
   height: 65px;
   margin-bottom: 30px;
 }
