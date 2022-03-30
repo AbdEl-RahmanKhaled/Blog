@@ -86,7 +86,6 @@ def dislikes(request):
 @login_required(redirect_field_name=None, login_url='/account/login')
 @verified_acc_only
 def sub_category(request, cat_id):
-    print("inside sub")
     account = Account.objects.get(id=request.user.id)
     cat = Category.objects.get(id=cat_id)
     cat.subbed_users.add(account)
