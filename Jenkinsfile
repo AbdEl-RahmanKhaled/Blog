@@ -13,9 +13,9 @@ pipeline {
        stage('build') {
            steps {
                 echo 'Building Docker image...'
-                sh "docker stop ${APP_NAME}"
-                sh "docker rm -f ${APP_NAME}"
-                sh "docker rmi -f ${IMG_NAME}:${OLD_TAG}"
+//                 sh "docker stop ${APP_NAME}"
+//                 sh "docker rm -f ${APP_NAME}"
+//                 sh "docker rmi -f ${IMG_NAME}:${OLD_TAG}"
                 sh "docker build -t ${IMG_NAME}:${NEW_TAG} ."
            }
        }
@@ -23,7 +23,7 @@ pipeline {
            steps {
                script {
                     echo 'deploying image....'
-                    sh "docker run -d --name ${APP_NAME} --network app-nw -p80:8000 ${IMG_NAME}:${NEW_TAG}"
+                    sh "docker run -d --name ${APP_NAME} --network app-nw -v /home/ubuntu/media:/usr/src/blog/media -p80:8000 ${IMG_NAME}:${NEW_TAG}"
                }
             }
         }
