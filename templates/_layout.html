@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+    <link rel="shortcut icon" href="/templates/staticfiles/img/blog.ico"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Nav -->
@@ -22,128 +23,128 @@
 <div style="min-height: 93.1%; background-color: #EEEEEE" class="container-fluid p-0">
     <div class="row m-0">
         {% if 'account' not in request.path %}
-        <div class="col-lg-2 position-fixed p-0" style="height: 100%; min-width: 280px" id="sticky-sidebar">
-            {#                {% include 'partials/_sidebar.html' %}#}
-            <div class="d-flex flex-column flex-shrink-0 p-3 text-white align-items-center bg-bar"
-                 style="width: 320px; height: 100%; text-align: center;">
-                {% if 'manage_blog' in request.path %}
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
-                            <a href="{% url 'admin_users_list' %}"
-                               class="nav-link {% if 'user' in request.path %} active {% endif %}"
-                               aria-current="page">
+            <div class="col-lg-2 position-fixed p-0" style="height: 100%; min-width: 280px" id="sticky-sidebar">
+                {#                {% include 'partials/_sidebar.html' %}#}
+                <div class="d-flex flex-column flex-shrink-0 p-3 text-white align-items-center bg-bar"
+                     style="width: 320px; height: 100%; text-align: center;">
+                    {% if 'manage_blog' in request.path %}
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            <li class="nav-item">
+                                <a href="{% url 'admin_users_list' %}"
+                                   class="nav-link {% if 'user' in request.path %} active {% endif %}"
+                                   aria-current="page">
 
-                                Users
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'admin-posts' %}"
-                               class="nav-link text-white {% if 'post' in request.path %} active {% endif %}">
+                                    Users
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'admin-posts' %}"
+                                   class="nav-link text-white {% if 'post' in request.path %} active {% endif %}">
 
-                                Posts
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'admin_categories-list' %}"
-                               class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
-                                Categories
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'admin_blocked_words' %}"
-                               class="nav-link text-white {% if 'word' in request.path %} active {% endif %}">
-                                Forbidden Words
-                            </a>
-                        </li>
-                    </ul>
-                    <hr/>
-                {% else %}
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        {#Listing Categories#}
-                        <span class="fs-4 border-start-0"
-                              style="border: #ffffff; border-radius: 20px;">Categories</span>
-                        <hr class="dropdown-divider" style="margin-bottom: 35px">
+                                    Posts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'admin_categories-list' %}"
+                                   class="nav-link text-white {% if 'categor' in request.path %} active {% endif %}">
+                                    Categories
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'admin_blocked_words' %}"
+                                   class="nav-link text-white {% if 'word' in request.path %} active {% endif %}">
+                                    Forbidden Words
+                                </a>
+                            </li>
+                        </ul>
+                        <hr/>
+                    {% else %}
+                        <ul class="nav nav-pills flex-column mb-auto">
+                            {#Listing Categories#}
+                            <span class="fs-4 border-start-0"
+                                  style="border: #ffffff; border-radius: 20px;">Categories</span>
+                            <hr class="dropdown-divider" style="margin-bottom: 35px">
 
-                        {% for cat in unsubbed_cat %}
-                            {% if cat.id != 6 %}
-                                <li>
-                                    <div class="row mb-2">
-                                        <div class="col">
-                                            <form method="GET" action="{% url 'search' %}"
-                                            >
-                                                <button class="btn btn-primary" data-bs-toggle="tooltip"
-                                                        data-bs-placement="right"
-                                                        title="Press to get all posts from this category"
-                                                        role="button" type="submit" id="liveToastBtn"
-                                                        style="min-width: 125px; float: left">
-                                                    {{ cat.category }} </button>
-                                                <input type="hidden" name="searched" value="{{ cat.category }}">
-                                            </form>
+                            {% for cat in unsubbed_cat %}
+                                {% if cat.id != 6 %}
+                                    <li>
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <form method="GET" action="{% url 'search' %}"
+                                                >
+                                                    <button class="btn btn-primary" data-bs-toggle="tooltip"
+                                                            data-bs-placement="right"
+                                                            title="Press to get all posts from this category"
+                                                            role="button" type="submit" id="liveToastBtn"
+                                                            style="min-width: 125px; float: left">
+                                                        {{ cat.category }} </button>
+                                                    <input type="hidden" name="searched" value="{{ cat.category }}">
+                                                </form>
+
+                                            </div>
+                                            {% if user.is_authenticated %}
+                                                <div class="col col-md-5">
+                                                    <form method="POST" action="{% url 'sub_category' cat.id %}">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-danger" data-bs-toggle="tooltip"
+                                                                data-bs-placement="right"
+                                                                title="Press to sub to this category"
+                                                                role="button" type="submit"
+                                                                style="min-width: 60px; float: right">
+                                                            Subscribe
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
 
                                         </div>
-                                        {% if user.is_authenticated %}
-                                            <div class="col col-md-5">
-                                                <form method="POST" action="{% url 'sub_category' cat.id %}">
-                                                    {% csrf_token %}
-                                                    <button class="btn btn-danger" data-bs-toggle="tooltip"
-                                                            data-bs-placement="right"
-                                                            title="Press to sub to this category"
-                                                            role="button" type="submit"
-                                                            style="min-width: 60px; float: right">
-                                                        Subscribe
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        {% endif %}
-
-                                    </div>
-                                </li>
-                            {% endif %}
-                        {% endfor %}
-                        {% if subbed_cat %}
-                            <hr class="dropdown-divider">
-
-                            {% for cat in subbed_cat %}
-                                <li>
-                                    <div class="row mb-2">
-                                        <div class="col">
-                                            <form method="GET" action="{% url 'search' %}">
-                                                <button class="btn btn-primary" data-bs-toggle="tooltip"
-                                                        data-bs-placement="right"
-                                                        title="Press to get all posts from this category"
-                                                        role="button" type="submit" id="liveToastBtn"
-                                                        style="min-width: 125px; float: left">
-                                                    {{ cat.category }} </button>
-                                                <input type="hidden" name="searched" value="{{ cat.category }}">
-                                            </form>
-
-                                        </div>
-                                        {% if user.is_authenticated %}
-                                            <div class="col col-md-5">
-                                                <form method="POST" action="{% url 'unsub_category' cat.id %}">
-                                                    {% csrf_token %}
-                                                    <button class="btn btn-secondary" data-bs-toggle="tooltip"
-                                                            data-bs-placement="right"
-                                                            title="Press to sub to this category"
-                                                            role="button" type="submit"
-                                                            style="min-width: 60px; float: right">
-                                                        Unsubscribe
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        {% endif %}
-
-                                    </div>
-                                </li>
+                                    </li>
+                                {% endif %}
                             {% endfor %}
+                            {% if subbed_cat %}
+                                <hr class="dropdown-divider">
+
+                                {% for cat in subbed_cat %}
+                                    <li>
+                                        <div class="row mb-2">
+                                            <div class="col">
+                                                <form method="GET" action="{% url 'search' %}">
+                                                    <button class="btn btn-primary" data-bs-toggle="tooltip"
+                                                            data-bs-placement="right"
+                                                            title="Press to get all posts from this category"
+                                                            role="button" type="submit" id="liveToastBtn"
+                                                            style="min-width: 125px; float: left">
+                                                        {{ cat.category }} </button>
+                                                    <input type="hidden" name="searched" value="{{ cat.category }}">
+                                                </form>
+
+                                            </div>
+                                            {% if user.is_authenticated %}
+                                                <div class="col col-md-5">
+                                                    <form method="POST" action="{% url 'unsub_category' cat.id %}">
+                                                        {% csrf_token %}
+                                                        <button class="btn btn-secondary" data-bs-toggle="tooltip"
+                                                                data-bs-placement="right"
+                                                                title="Press to sub to this category"
+                                                                role="button" type="submit"
+                                                                style="min-width: 60px; float: right">
+                                                            Unsubscribe
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                    </li>
+                                {% endfor %}
                             {% endif %}
 
-                            </ul>
-                            <hr/>
-                        {% endif %}
-                    </div>
-                    </div>
-                {% endif %}
+                        </ul>
+                        <hr/>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
         <div class="col p-0" {% if 'account' not in request.path %} style="margin-left: 295px;"  {% endif %}>
             <!-- Base content -->
             {% block content %}

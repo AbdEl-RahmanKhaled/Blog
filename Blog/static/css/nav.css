@@ -1,15 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Ubuntu:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@200&family=Permanent+Marker&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600&display=swap');
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px;
+}
 
 .bg-bar {
- background: #1A132F;
+    background: #1A132F;
 }
 
 .nav-bg {
     background: #1A132F;
 }
 
-.logo{
-    font-family: 'Rubik Mono One', sans-serif;
+.logo {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 32px;
 }
 
 .nav-link {
